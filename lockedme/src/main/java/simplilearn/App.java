@@ -1,6 +1,7 @@
 package simplilearn;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
@@ -15,7 +16,7 @@ import java.util.*;
 public class App 
 {
 
-    final static String FOLDER = "/Users/JT/Documents";
+    final static String FOLDER = "/Users/JT/Documents/HCL";
 
     static Scanner scanner = new Scanner(System.in);
 
@@ -46,6 +47,7 @@ public class App
     }
 
     private static void showFileOperations() {
+    	System.out.println("\nWhat do you want to do");
         System.out.println("--------------");
         System.out.println("1.) Add a file");
         System.out.println("2.) Delete a file");
@@ -56,12 +58,12 @@ public class App
     }
 
     private static void addAFile() throws InvalidPathException {
-        System.out.println("Please provide a file path:");
-        String filePath = scanner.nextLine();
+       
     	System.out.println("Provide file Name");
     	   String file= scanner.nextLine();
-    	   String combine = filePath +"/" + file;
-        File fNandP = new File(combine);
+    	
+    	   String fullPath  = FOLDER +"/" + file; 
+        File newFile = new File(fullPath);
      
         
      
@@ -69,16 +71,15 @@ public class App
         
 //        Path path = Paths.get(filePath);
        
-        if (!fNandP.exists()) {
-            System.out.println("\n" +"Creating File " +combine+"\n");
+        if (!newFile.exists()) {
+            System.out.println("\n" +"Creating File " +file+"\n");
             try {
-				Files.createFile(Paths.get(combine));
+				Files.createFile(Paths.get(fullPath));
 			System.out.println("File Created"+"\n");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-            System.out.println("Main Menu");
             return;
         }
 
@@ -107,14 +108,19 @@ public class App
             	deleteFile();
                 break;
             case "3":
+            	searchFile();
                 break;
             case "4":
+            	
                 break;
                 default:
                 System.out.println("Invalid input provided, please choose 1, 2, 3, or 4.");
         
         }
         if (option.equals("4")) {
+        	System.out.println("\n-----------------");
+        	System.out.println("Back to main menu");
+        	System.out.println("-----------------\n");
         	showWelcomeScreen();
             showMainMenu();
         }
@@ -155,19 +161,17 @@ public class App
     }
     private static void deleteFile() {
     	try {
-    	System.out.println("Please provide a file path:");
     	
-        String filePath = scanner.nextLine();
-        File p = new File(filePath);
+        File p = new File(FOLDER);
         String[] pathnames;
         pathnames = p.list();
         for (String pathname : pathnames) {
             // Print the names of files and directories
             System.out.println(pathname);
         }
-    	System.out.println("What file do you want to delete");
+    	System.out.println("\nWhat file do you want to delete");
     	   String file= scanner.nextLine();
-    	   String combine = filePath +"/" + file;
+    	   String combine = FOLDER +"/" + file;
     	File delete = new File(combine);
     	if (delete.exists()) {
             System.out.println("\n" +"Deleting File " +combine+"\n");
@@ -185,6 +189,40 @@ public class App
     	}
             return;
         
+    	
+    }
+    public static void searchFile() {
+    	File init = new File(FOLDER);
+    	String[] pathnames;
+        pathnames = init.list();
+        for (String pathname : pathnames) {
+            // Print the names of files and directories
+            System.out.println(pathname);
+        }
+        System.out.println("----------------------");
+   	 System.out.println("Which file do you want to read?");
+    	String fileName = scanner.nextLine();
+    	String directName= FOLDER +"/" +fileName;
+    	
+    	try {
+    		
+    	File dire = new File (directName);
+    	 Scanner myReader = new Scanner(dire);
+    	
+    	  while (myReader.hasNextLine()) {
+    	        String data = myReader.nextLine();
+    	        System.out.println(data);
+    	      }
+    	      myReader.close();
+    	}
+    	catch(FileNotFoundException e) {
+    		System.out.println("File doesn't exist");
+    	    
+    		return;
+    	}
+    	
+    	return;
+    	
     	
     }
 }
