@@ -15,7 +15,7 @@ import java.util.*;
 public class App 
 {
 
-    final static String FOLDER = "/tmp";
+    final static String FOLDER = "/Users/JT/Documents";
 
     static Scanner scanner = new Scanner(System.in);
 
@@ -58,24 +58,40 @@ public class App
     private static void addAFile() throws InvalidPathException {
         System.out.println("Please provide a file path:");
         String filePath = scanner.nextLine();
-        Path path = Paths.get(filePath);
+    	System.out.println("Provide file Name");
+    	   String file= scanner.nextLine();
+    	   String combine = filePath +"/" + file;
+        File fNandP = new File(combine);
+     
+        
+     
 
-        if (!Files.exists(path)) {
-            System.out.println("File does not exist");
+        
+//        Path path = Paths.get(filePath);
+       
+        if (!fNandP.exists()) {
+            System.out.println("\n" +"Creating File " +combine+"\n");
+            try {
+				Files.createFile(Paths.get(combine));
+			System.out.println("File Created"+"\n");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             return;
         }
 
-        String newFilePath = FOLDER + "/" + path.getFileName();
-        int inc = 0;
-        while (Files.exists(Paths.get(newFilePath))) {
-            inc++;
-            newFilePath = FOLDER + "/" + inc + "_" + path.getFileName();
-        }
-        try {
-            Files.copy(path, Paths.get(newFilePath));
-        } catch(IOException e) {
-            System.out.println("Unable to copy file to " + newFilePath);
-        }
+//        String newFilePath = FOLDER + "/" + path.getFileName();
+//        int inc = 0;
+//        while (Files.exists(Paths.get(newFilePath))) {
+//            inc++;
+//            newFilePath = FOLDER + "/" + inc + "_" + path.getFileName();
+//        }
+//        try {
+//            Files.copy(path, Paths.get(newFilePath));
+//        } catch(IOException e) {
+//            System.out.println("Unable to copy file to " + newFilePath);
+//        }
 
     }
 
@@ -87,13 +103,23 @@ public class App
                 addAFile();
                 break;
             case "2":
+            	deleteFile();
                 break;
             case "3":
                 break;
             case "4":
                 break;
+                default:
+                System.out.println("Invalid input provided, please choose 1, 2, 3, or 4.");
+        
         }
+        if (option.equals("4")) {
+        	showWelcomeScreen();
+            showMainMenu();
+        }
+        else {
         showFileOperations();
+        }
     }
 
     private static void showFilesInAscendingOrder() {
@@ -123,7 +149,41 @@ public class App
     private static void showWelcomeScreen() {
         System.out.println("---------------");
         System.out.println("Application: LockedMe.com");
-        System.out.println("Developer: Bas Kuis");
+        System.out.println("Developer: Jon-Thomas Smith");
         System.out.println("---------------");
+    }
+    private static void deleteFile() {
+    	try {
+    	System.out.println("Please provide a file path:");
+    	
+        String filePath = scanner.nextLine();
+        File p = new File(filePath);
+        String[] pathnames;
+        pathnames = p.list();
+        for (String pathname : pathnames) {
+            // Print the names of files and directories
+            System.out.println(pathname);
+        }
+    	System.out.println("What file do you want to delete");
+    	   String file= scanner.nextLine();
+    	   String combine = filePath +"/" + file;
+    	File delete = new File(combine);
+    	if (delete.exists()) {
+            System.out.println("\n" +"Deleting File " +combine+"\n");
+        
+				delete.delete();
+			System.out.println("File Deleted"+"\n");
+			} 
+    	else {
+    		System.out.println("File doesn't exsist");
+    	}
+    	}
+    	catch(Exception e) {
+    		e.printStackTrace();
+    		
+    	}
+            return;
+        
+    	
     }
 }
