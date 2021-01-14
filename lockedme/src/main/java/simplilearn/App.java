@@ -16,7 +16,9 @@ import java.util.*;
 public class App 
 {
 
-    final static String FOLDER = "/tmp";
+    final static String FOLDER = "C:\\Users\\jonthomas.smith\\Documents\\";
+    
+    
 
     static Scanner scanner = new Scanner(System.in);
 
