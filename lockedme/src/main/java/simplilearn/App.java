@@ -16,7 +16,7 @@ import java.util.*;
 public class App 
 {
 
-    final static String FOLDER = "/Users/JT/Documents/HCL";
+    final static String FOLDER = "/tmp";
 
     static Scanner scanner = new Scanner(System.in);
 
@@ -41,7 +41,7 @@ public class App
                 System.exit(0);
                 break;
             default:
-                System.out.println("Invalid input provided, please choose 1, 2 or 3.");
+                System.out.println("Invalid input");
         }
         showMainMenu();
     }
@@ -72,17 +72,21 @@ public class App
 //        Path path = Paths.get(filePath);
        
         if (!newFile.exists()) {
-            System.out.println("\n" +"Creating File " +file+"\n");
+            System.out.println("\n" +"Creating File " +file +"........"+"\n");
             try {
 				Files.createFile(Paths.get(fullPath));
-			System.out.println("File Created"+"\n");
+			System.out.println("\nFile Created");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
             return;
         }
+        else {
+            System.out.println("\n" +"Creating File " +file +"........"+"\n");
 
+        	System.out.println("\nFile Already Exists");
+        }
 //        String newFilePath = FOLDER + "/" + path.getFileName();
 //        int inc = 0;
 //        while (Files.exists(Paths.get(newFilePath))) {
@@ -114,7 +118,7 @@ public class App
             	
                 break;
                 default:
-                System.out.println("Invalid input provided, please choose 1, 2, 3, or 4.");
+                System.out.println("Invalid input provided");
         
         }
         if (option.equals("4")) {
@@ -131,7 +135,7 @@ public class App
 
     private static void showFilesInAscendingOrder() {
         System.out.println("------------------");
-        System.out.println("Showing files in ascending order");
+        System.out.println("Showing files in ascending order\n");
         File[] files = new File(FOLDER).listFiles();
         Set<String> sorted = new TreeSet<>();
         for (File file: files) {
@@ -161,7 +165,7 @@ public class App
     }
     private static void deleteFile() {
     	try {
-    	
+    	System.out.println("\n");
         File p = new File(FOLDER);
         String[] pathnames;
         pathnames = p.list();
@@ -174,7 +178,7 @@ public class App
     	   String combine = FOLDER +"/" + file;
     	File delete = new File(combine);
     	if (delete.exists()) {
-            System.out.println("\n" +"Deleting File " +combine+"\n");
+            System.out.println("\n" +"Deleting File " +file+"......" +"\n");
         
 				delete.delete();
 			System.out.println("File Deleted"+"\n");
@@ -192,35 +196,25 @@ public class App
     	
     }
     public static void searchFile() {
-    	File init = new File(FOLDER);
-    	String[] pathnames;
-        pathnames = init.list();
-        for (String pathname : pathnames) {
-            // Print the names of files and directories
-            System.out.println(pathname);
-        }
+
         System.out.println("----------------------");
-   	 System.out.println("Which file do you want to read?");
+   	 System.out.println("Which file are you looking for?");
     	String fileName = scanner.nextLine();
     	String directName= FOLDER +"/" +fileName;
     	
-    	try {
-    		
-    	File dire = new File (directName);
-    	 Scanner myReader = new Scanner(dire);
-    	
-    	  while (myReader.hasNextLine()) {
-    	        String data = myReader.nextLine();
-    	        System.out.println(data);
-    	      }
-    	      myReader.close();
+    	File name = new File (directName);
+    	if (name.exists()) {
+    		  System.out.println("\n----------------------");
+    		System.out.println("Searching ....\n");
+    		 System.out.println(fileName +" found");
+    		  System.out.println("----------------------");
     	}
-    	catch(FileNotFoundException e) {
-    		System.out.println("File doesn't exist");
-    	    
-    		return;
+    	else {
+    		  System.out.println("\n----------------------");
+    		System.out.println("Searching ....\n");
+    		System.out.println("File not Found");
+    		  System.out.println("----------------------");
     	}
-    	
     	return;
     	
     	
