@@ -41,7 +41,7 @@ public class App
                 System.exit(0);
                 break;
             default:
-                System.out.println("Invalid input");
+                System.out.println("Invalid input provided");
         }
         showMainMenu();
     }
