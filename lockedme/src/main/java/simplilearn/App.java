@@ -16,7 +16,9 @@ import java.util.*;
 public class App 
 {
 
-    final static String FOLDER = "/tmp";
+    final static String FOLDER = "C:\\Users\\jonthomas.smith\\Documents\\";
+    
+    
 
     static Scanner scanner = new Scanner(System.in);
 
@@ -57,12 +59,16 @@ public class App
         collectFileOperation();
     }
 
-    private static void addAFile() throws InvalidPathException {
-       
+    private static void addAFile(){
+    	System.out.println("----------------------");
+      	 System.out.println("Enter a Path Name");
+     	String pathInput= scanner.nextLine();
+    	
+    	   
     	System.out.println("Provide file Name");
     	   String file= scanner.nextLine();
     	
-    	   String fullPath  = FOLDER +"/" + file; 
+    	   String fullPath  = pathInput +"/" + file; 
         File newFile = new File(fullPath);
      
         
@@ -76,17 +82,16 @@ public class App
             try {
 				Files.createFile(Paths.get(fullPath));
 			System.out.println("\nFile Created");
-			} catch (IOException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+System.out.println("Invalid");			}
             return;
         }
-        else {
-            System.out.println("\n" +"Creating File " +file +"........"+"\n");
-
-        	System.out.println("\nFile Already Exists");
-        }
+       
+        return;
+    	}
+    	
+    	
 //        String newFilePath = FOLDER + "/" + path.getFileName();
 //        int inc = 0;
 //        while (Files.exists(Paths.get(newFilePath))) {
@@ -99,7 +104,6 @@ public class App
 //            System.out.println("Unable to copy file to " + newFilePath);
 //        }
 
-    }
 
     private static void collectFileOperation() {
         System.out.println("Please choose 1, 2, 3 or 4:");
@@ -136,7 +140,11 @@ public class App
     private static void showFilesInAscendingOrder() {
         System.out.println("------------------");
         System.out.println("Showing files in ascending order\n");
-        File[] files = new File(FOLDER).listFiles();
+        System.out.println("------------------");
+        System.out.println("Enter a Path Name");
+        try {
+    	String pathInput= scanner.nextLine();
+        File[] files = new File(pathInput).listFiles();
         Set<String> sorted = new TreeSet<>();
         for (File file: files) {
             if (!file.isFile()) {
@@ -146,6 +154,11 @@ public class App
         }
         sorted.forEach(System.out::println);
         System.out.println("------------------");
+        }
+        catch(Exception e){
+        	System.out.println("Path not Found");
+        }
+        return;
     }
 
     private static void showMainMenu() {
@@ -165,17 +178,13 @@ public class App
     }
     private static void deleteFile() {
     	try {
-    	System.out.println("\n");
-        File p = new File(FOLDER);
-        String[] pathnames;
-        pathnames = p.list();
-        for (String pathname : pathnames) {
-            // Print the names of files and directories
-            System.out.println(pathname);
-        }
+            System.out.println("----------------------");
+         	 System.out.println("Enter a Path Name");
+        	String pathInput= scanner.nextLine();
+        
     	System.out.println("\nWhat file do you want to delete");
     	   String file= scanner.nextLine();
-    	   String combine = FOLDER +"/" + file;
+    	   String combine = pathInput +"/" + file;
     	File delete = new File(combine);
     	if (delete.exists()) {
             System.out.println("\n" +"Deleting File " +file+"......" +"\n");
@@ -184,7 +193,7 @@ public class App
 			System.out.println("File Deleted"+"\n");
 			} 
     	else {
-    		System.out.println("File doesn't exsist");
+    		System.out.println("File not Found");
     	}
     	}
     	catch(Exception e) {
@@ -198,9 +207,12 @@ public class App
     public static void searchFile() {
 
         System.out.println("----------------------");
-   	 System.out.println("Which file are you looking for?");
+      	 System.out.println("Enter a Path Name");
+     	String pathInput= scanner.nextLine();
+
+   	 System.out.println("Enter a file Name");
     	String fileName = scanner.nextLine();
-    	String directName= FOLDER +"/" +fileName;
+    	String directName= pathInput +"/" +fileName;
     	
     	File name = new File (directName);
     	if (name.exists()) {
