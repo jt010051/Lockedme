@@ -167,14 +167,8 @@ public class App
     }
     private static void deleteFile() {
     	try {
-    	System.out.println("\n");
-        File p = new File(FOLDER);
-        String[] pathnames;
-        pathnames = p.list();
-        for (String pathname : pathnames) {
-            // Print the names of files and directories
-            System.out.println(pathname);
-        }
+  
+        
     	System.out.println("\nWhat file do you want to delete");
     	   String file= scanner.nextLine();
     	   String combine = FOLDER +"/" + file;
@@ -186,7 +180,7 @@ public class App
 			System.out.println("File Deleted"+"\n");
 			} 
     	else {
-    		System.out.println("File doesn't exsist");
+    		System.out.println("File not Found");
     	}
     	}
     	catch(Exception e) {
